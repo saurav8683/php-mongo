@@ -1,0 +1,11 @@
+CREATE TABLE log_table(
+
+	id int(11) PRIMARY KEY AUTO_INCREMENT,
+    person_id int(11),
+    start_date date,
+    end_date date,
+    signed_by int(11),
+    signed_date date,
+
+    FOREIGN KEY (signed_by) REFERENCES faculty(id)
+);

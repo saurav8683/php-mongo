@@ -11,14 +11,14 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Portal</title>
+    <title>Leaves Ccheck</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   </head>
 
   <body>
 
-    <?php include 'topnav_user.php';?>
+    <?php include 'topnav_auth.php';?>
 
     <main role="main">
 
@@ -73,26 +73,44 @@
                 }   
               }
               
-              echo "Name: ".$firstname." ".$lastname."<br>";
-              echo "Department: ".$dep."<br>";
-              echo "Designation: ".$design."<br>";
-              echo "Mobile Number: ".$mob_no."<br>";
-              echo "Office Number: ".$office_no."<br>";
-              echo "Personal EmailId: ".$per_email."<br>";
+              $designation =strtoupper($design);
               
-              $sql = "SELECT * FROM faculty WHERE faculty.firstname = '$firstname' and faculty.lastname = '$lastname' and faculty.department='$dep';";
+              $sql = "SELECT * FROM state_table WHERE designation = '$designation';";
 
               $id1 = mysqli_fetch_assoc(mysqli_query($conn, $sql));
 
-              echo "Number of Leaves Available: ".$id1['leaves_available_this_year']."<br>";
+              $state= $id1['heirarchy_no'];
+              
+              echo "Heirarchy Number: ".$state."<br>";
 
             ?>
           </p>
-          <p><a class="btn btn-primary btn-lg" href="info_register.php" role="button">Add | Edit &raquo;</a></p>
-          <p><a class="btn btn-primary btn-lg" href="leave_form.php" role="button">Apply for Leave &raquo;</a></p>
-          <p><a class="btn btn-primary btn-lg" href="leave_status.php" role="button">Leave Status &raquo;</a></p>
         </div>
       </div>
+
+      <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+          <div class="col-md-4">
+            <h2>Heading</h2>
+            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+          </div>
+          <div class="col-md-4">
+            <h2>Heading</h2>
+            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+          </div>
+          <div class="col-md-4">
+            <h2>Heading</h2>
+            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+          </div>
+        </div>
+
+        <hr>
+
+      </div> <!-- /container -->
 
     </main>
 
@@ -104,3 +122,4 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   </body>
 </html>
+

@@ -8,30 +8,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Portal</title>
+    <title>Leave Form</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-    <?php include 'topnav_user.php';?>
+    <?php include 'topnav_auth.php';?>
 
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6 mt-5">                
-                <form action="php/info_insert.php" method="POST">
-                    <h2 class="text-center">INFORMATION REGISTER</h2>
+                <form action="leave.php" method="POST">
+                    <h2 class="text-center">LEAVE APPLICATION</h2>
                     <input type="hidden" name="id" value="
                     <?php 
                         include 'php/db.inc.php';
           
                         $query_user = new MongoDB\Driver\Query([]);
+                        
                         $rows = $manager->executeQuery($dbname, $query_user);
-          
+                        
+                        $firstname="";
+                        $lastname="";
+                        
                         foreach($rows as $row){
                           if(!strcmp($row->username,$_SESSION['username'])){
-                            echo $row->_id;
+                            
+                            $lastname = $row->lastname;
+                            $firstname = $row->firstname; 
                           break;
                           }   
-                        }                    
+                        }
+                        
+                        $sql2 = "SELECT id FROM faculty WHERE faculty.firstname = '$firstname' and faculty.lastname = '$lastname' ;";
+
+                        $id = mysqli_fetch_assoc(mysqli_query($conn, $sql2));
+
+                        echo $id['id'];
                          
                     ?>">
                     <input type="hidden" name="firstname" value="
@@ -64,60 +76,21 @@
                         }                    
                          
                     ?>">
-                    <input type="hidden" name="username" value="
-                    <?php 
-                        include 'php/db.inc.php';
-          
-                        $query_user = new MongoDB\Driver\Query([]);
-                        $rows = $manager->executeQuery($dbname, $query_user);
-          
-                        foreach($rows as $row){
-                          if(!strcmp($row->username,$_SESSION['username'])){
-                            echo $row->username;
-                          break;
-                          }   
-                        }                    
-                         
-                    ?>">
-                    <input type="hidden" name="password" value="
-                    <?php 
-                        include 'php/db.inc.php';
-          
-                        $query_user = new MongoDB\Driver\Query([]);
-                        $rows = $manager->executeQuery($dbname, $query_user);
-          
-                        foreach($rows as $row){
-                          if(!strcmp($row->username,$_SESSION['username'])){
-                            echo $row->password;
-                          break;
-                          }   
-                        }                    
-                         
-                    ?>">
-                    
                     <div class="form-group">
-                        <label for="dep">Department Name</label>
-                        <input type="text" class="form-control" id="dep" name="dep" placeholder="Enter Department Name">
+                        <label for="start_date">Start Date</label>
+                        <input type="date" class="form-control" id="start_date" name="start_date" placeholder="Enter Start Date">
                     </div>
                     <div class="form-group">
-                        <label for="age">Age</label>
-                        <input type="number" class="form-control" id="age" name="age" placeholder="Enter Age">
+                        <label for="end_date">End Date</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date" placeholder="Enter End Date">
                     </div>
                     <div class="form-group">
-                        <label for="designation">Designation</label>
-                        <input type="text" class="form-control" id="designation" name="designation" placeholder="Enter Designation">
+                        <label for="reason">Reason</label>
+                        <input type="text" class="form-control" id="reason" name="reason" placeholder="Enter Reason">
                     </div>
                     <div class="form-group">
-                        <label for="per_email">Personel Email</label>
-                        <input type="text" class="form-control" id="per_email" name="per_email" placeholder="Enter Personel Email">
-                    </div>
-                    <div class="form-group">
-                        <label for="mobile_no">Mobile Number</label>
-                        <input type="text" class="form-control" id="mobile_no" name="mobile_no" placeholder="Enter mobile number">
-                    </div>
-                    <div class="form-group">
-                        <label for="office_no">Office Number</label>
-                        <input type="text" class="form-control" id="office_no" name="office_no" placeholder="Enter office number">
+                        <label for="borrow">Borrow from next year</label>
+                        <input type="int" class="form-control" id="borrow" name="borrow" placeholder="Enter 1 to borrow and 0 to not borrow.">
                     </div>
                     <input type="submit" value="SUBMIT" class="btn btn-primary btn-block">
                 </form>
