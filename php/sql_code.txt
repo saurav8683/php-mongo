@@ -1,0 +1,47 @@
+INSERT into faculty(firstname, lastname, department, designation, leaves_available_this_year, leaves_available_next_year) values ('Vaibhav', 'Singh', 'ME', 'Professor', 30, 30);
+
+
+CREATE TABLE leave_portal(
+   id int(11) not null PRIMARY KEY AUTO_INCREMENT,
+   person_id int(11) not null,
+   start_D date not null,
+   end_D date not null,
+   number_of_days int(10) not null,
+   reason TEXT(1000) not null,
+   leave_status int(10) not null,
+   position int(10) not null,
+   FOREIGN KEY (person_id) REFERENCES faculty(id)
+);
+
+
+
+CREATE TABLE comment_portal(
+   id int(11) not null PRIMARY KEY AUTO_INCREMENT,
+   leave_id int(11) not null,
+   comment TEXT(1000) null,
+   person_id int(11) not null,
+   comment_time time null,
+   comment_date date null,
+   FOREIGN KEY (person_id) REFERENCES designation_table(person_id),
+    
+   FOREIGN KEY (leave_id) REFERENCES leave_portal(id)
+);
+
+
+CREATE TABLE state_table(
+   id int(11) not null PRIMARY KEY AUTO_INCREMENT,
+   designation TEXT(100) not null,
+   heirarchy_no int(10) not NULL
+);
+
+
+CREATE TABLE log_table(
+   id int(11) not null PRIMARY KEY AUTO_INCREMENT,
+   leave_id int(11) not null,
+   signed_by int(11) not null,
+   signed_time time not null,
+   signed_date date not null,
+
+	FOREIGN KEY (leave_id) REFERENCES leave_portal(id),
+    FOREIGN KEY (signed_by) REFERENCES designation_table(person_id)
+);
